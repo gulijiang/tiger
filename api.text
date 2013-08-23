@@ -1,0 +1,27 @@
+
+算法：
+1.数据  = 自身概率（百分数） * 整体基数 * 1/压数 
+组成的数据：
+[
+	{
+      guId: "1", 
+      name: "飞禽", 
+      probability: "1/12", 
+      addition: "0", 
+      times: "2",
+      realProbability:"0.0001"
+    }, 
+    {
+      guId: "2", 
+      name: "燕子", 
+      probability: "1/12", 
+      addition: "0", 
+      times: "6",
+       realProbability:"0.0002"
+    }, 
+    ...
+]
+2.求出数组中的每个realProbability的最小值min，与最大值max  
+3.有php自带的方法 mt_rand(min,max) 生成一个数值 $rand
+4.然后 再分别求出 |$rand - 数值中的每个realProbability|，存入数组中。
+5.最后再求出差值最小的值 所对应的就是出现的中奖物体
