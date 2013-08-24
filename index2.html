@@ -9,106 +9,80 @@
 <script type="text/javascript">
 	$(function(){
 		var sendData = {
-				  result_message: [
+				  param: [
 				    {
 				      guId: "1", 
 				      name: "飞禽", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "2"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "2", 
 				      name: "燕子", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "6"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "3", 
 				      name: "鸽子", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "8"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "4", 
 				      name: "孔雀", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "12"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "5", 
 				      name: "老鹰", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "12"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "6", 
 				      name: "走兽", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "2"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "7", 
 				      name: "兔子", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "6"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "8", 
 				      name: "猴子", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "8"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "9", 
 				      name: "熊猫", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "12"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "10", 
 				      name: "狮子", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "12"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "11", 
 				      name: "大白鲨", 
-				      probability: "1/12", 
-				      addition: "0", 
-				      times: "24"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "12", 
 				      name: "射灯", 
-				      probability: "1/12", 
-				      addition: "1", 
-				      times: "0"
+				      pinNumber :1,
 				    }, 
 				    {
 				      guId: "13", 
 				      name: "大炮", 
-				      probability: "0", 
-				      addition: "0", 
-				      times: "0"
+				      pinNumber :1,
 				    }
 				  ]
 				};
 		
 		$.ajax({
-			url : "control/front/test.php?method=1",
 			data : sendData,
+			url : "control/front/getResult.php?method=getWinResult",
 			dataType : "json",
-			type : "get",
+			type : "post",
 			success :function(data){
 				console.log(data);
 			}

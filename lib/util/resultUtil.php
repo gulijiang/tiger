@@ -37,5 +37,14 @@
 		$result['result_message'] = $message;
 		return $result;
 	}
-
+	
+	/**
+	 * 错误信息
+	 * @param $message
+	 */
+	function errorMethod(){
+		$message = "error method";
+		$result = getFailureResultByMessage($message);
+		echo json_encode($result);
+	}
 ?>

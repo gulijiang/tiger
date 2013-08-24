@@ -10,7 +10,7 @@ Class MySQL
 	var $host = "localhost:3306";
 	var $user = "root";
 	//var $passwd = "insigma";
-	var $passwd = "root";
+	var $passwd = "123456";
 	var $database = "tiger";
 	var $conn;
 

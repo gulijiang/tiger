@@ -1,10 +1,8 @@
 <?php
-	include '../../lib/database/DBconn.php';
     /**
      * 查询所有的整体的基础数据（一般是一条）
      */
-	function getWholebases(){
-		$mysql = new MySQL();
+	function getWholebases($mysql){
 		$query = "select guId,wholeBase,maxNumber from tb_wholebase";
 		$res = $mysql->Query($query);
 		$array = $mysql->getRows($res);
@@ -17,8 +15,7 @@
 	 * @param $wholeBase
 	 * @param $maxNumber
 	 */
-	function updateWholebaseById($guId,$wholeBase,$maxNumber){
-		$mysql = new MySQL();
+	function updateWholebaseById($mysql,$guId,$wholeBase,$maxNumber){
 		$update = "update tb_wholebase set wholeBase = '{$wholeBase}',maxNumber = {$maxNumber} where guId = {$guId}";
 		$flag = $mysql ->update($update);
 		return $flag;
