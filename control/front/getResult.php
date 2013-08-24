@@ -46,9 +46,6 @@
 			}
 			//3.有php自带的方法 mt_rand(min,max) 生成一个数值 $rand
 			$rand = mt_rand($realProbabilityMin, $realProbabilityMax);
-			echo $realProbabilityMin.":".$realProbabilityMax;
-			echo $rand;
-			echo "<br/>";
 			//4.然后 再分别求出 |$rand - 数值中的每个realProbability|，再求出差值最小的值 所对应的就是出现的中奖物体。
 			$min = abs($dataArray[0]['realProbability'] - $rand);
 			$index = 0;
@@ -60,8 +57,6 @@
 					$index = $k;
 				}
 			}
-			echo json_encode($dataArray);
-			echo "<br/>";
 			$message =  $dataArray[$index];
 			$result = getSuccessResultByMessage($message);
 			echo json_encode($result);
