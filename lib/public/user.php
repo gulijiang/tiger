@@ -1,12 +1,10 @@
 <?php
-	include '../../lib/database/DBconn.php';
-	include './base.php';
+	include 'base.php';
 	/**
 	 * 添加用户
 	 * @param $conditon
 	 */
-	function addUser($condition){
-		$mysql = new MySQL();
+	function addUser($mysql,$condition){
 		$sql = getInsertSql("tb_user", $condition);
 		$flag = $mysql ->insert($sql);
 		return $flag;
@@ -17,8 +15,7 @@
 	 * @param $condition
 	 * @param $guId
 	 */
-	function updateUserById($condition,$guId){
-		$mysql = new MySQL();
+	function updateUserById($mysql,$condition,$guId){
 		$sql = getUpdateSql("tb_user", $condition, $guId);
 		$flag = $mysql ->update($sql);
 		return $flag;
@@ -28,14 +25,50 @@
 	 * 根据Id查询用户
 	 * @param $guId
 	 */
-	function getUserById($guId){
-		$mysql = new MySQL();
+	function getUserById($mysql,$guId){
 		$query = "select guId,nick,pwd,secretQuestion,secretAnswer,mobile,sex,headPic,email,bankName,bankAccount,cardHolder,totalMoney,desirableMoney,".
 		         "useableMoney,frostMoney,remainMoney,availableSilver from tb_user where guId = {$guId}";
-		$flag = $mysql ->update($query);
-		return $flag;
+		$res = $mysql ->Query($query);
+		$array = $mysql->getRows($res);
+		return $array;
 	}
 	
 	
+	/**
+	 * 通过Email查询用户
+	 */
+	function getUserByEmail($mysql,$email){
+		$query = "select guId,nick,pwd,secretQuestion,secretAnswer,mobile,sex,headPic,email,bankName,bankAccount,cardHolder,totalMoney,desirableMoney,".
+		         "useableMoney,frostMoney,remainMoney,availableSilver from tb_user where email = '{$email}'";
+		$res = $mysql ->Query($query);
+		$array = $mysql->getRows($res);
+		return $array;
+	}
+	
+	/**
+	 * 检查银两数够不够
+	 * Enter description here ...
+	 * @param $mysql
+	 * @param $availableSilver
+	 * @param $guId
+	 */
+	function checkAvailableSilver($mysql,$availableSilver,$guId){
+		$query = "select count(*) as availableSilver from tb_user where guId = {$guId} and (availableSilver-{$availableSilver}) >= 0";
+		$res = $mysql ->Query($query);
+		$array = $mysql->getRows($res);
+		return $array;
+	}
+	
+	/**
+	 * 扣除或加上银两
+	 * @param $mysql
+	 * @param $guId
+	 * @param $availableSilver
+	 */
+	function deductAvailableSilver($mysql,$guId,$availableSilver){
+		$updateSql = "update tb_user set availableSilver = availableSilver - {$availableSilver} where guId = {$guId}";
+		$flag = $mysql -> update($updateSql);
+		return $flag;
+	}
 	
 ?>

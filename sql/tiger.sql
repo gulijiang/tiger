@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50512
 File Encoding         : 65001
 
-Date: 2013-08-22 22:33:25
+Date: 2013-08-26 17:31:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,28 +31,65 @@ CREATE TABLE `tb_basedinformation` (
 -- ----------------------------
 -- Records of tb_basedinformation
 -- ----------------------------
-INSERT INTO `tb_basedinformation` VALUES ('1', '飞禽', '1/12', '0', '2');
-INSERT INTO `tb_basedinformation` VALUES ('2', '燕子', '1/12', '0', '6');
-INSERT INTO `tb_basedinformation` VALUES ('3', '鸽子', '1/12', '0', '8');
-INSERT INTO `tb_basedinformation` VALUES ('4', '孔雀', '1/12', '0', '12');
-INSERT INTO `tb_basedinformation` VALUES ('5', '老鹰', '1/12', '0', '12');
-INSERT INTO `tb_basedinformation` VALUES ('6', '走兽', '1/12', '0', '2');
-INSERT INTO `tb_basedinformation` VALUES ('7', '兔子', '1/12', '0', '6');
-INSERT INTO `tb_basedinformation` VALUES ('8', '猴子', '1/12', '0', '8');
-INSERT INTO `tb_basedinformation` VALUES ('9', '熊猫', '1/12', '0', '12');
-INSERT INTO `tb_basedinformation` VALUES ('10', '狮子', '1/12', '0', '12');
-INSERT INTO `tb_basedinformation` VALUES ('11', '大白鲨', '1/12', '0', '24');
-INSERT INTO `tb_basedinformation` VALUES ('12', '射灯', '1/12', '1', '0');
-INSERT INTO `tb_basedinformation` VALUES ('13', '大炮', '0', '0', '0');
+INSERT INTO `tb_basedinformation` VALUES ('1', '飞禽', '0.04', '0', '2');
+INSERT INTO `tb_basedinformation` VALUES ('2', '燕子', '0.03', '0', '6');
+INSERT INTO `tb_basedinformation` VALUES ('3', '鸽子', '0.02', '0', '8');
+INSERT INTO `tb_basedinformation` VALUES ('4', '孔雀', '0.01', '0', '12');
+INSERT INTO `tb_basedinformation` VALUES ('5', '老鹰', '0.01', '0', '12');
+INSERT INTO `tb_basedinformation` VALUES ('6', '走兽', '0.04', '0', '2');
+INSERT INTO `tb_basedinformation` VALUES ('7', '兔子', '0.03', '0', '6');
+INSERT INTO `tb_basedinformation` VALUES ('8', '猴子', '0.02', '0', '8');
+INSERT INTO `tb_basedinformation` VALUES ('9', '熊猫', '0.01', '0', '12');
+INSERT INTO `tb_basedinformation` VALUES ('10', '狮子', '0.01', '0', '12');
+INSERT INTO `tb_basedinformation` VALUES ('11', '大白鲨', '0.005', '0', '24');
+INSERT INTO `tb_basedinformation` VALUES ('12', '射灯', '0.05', '1', '0');
+INSERT INTO `tb_basedinformation` VALUES ('13', '大炮', '99.715', '0', '0');
+
+-- ----------------------------
+-- Table structure for `tb_online`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_online`;
+CREATE TABLE `tb_online` (
+  `guId` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(40) COLLATE utf8_bin DEFAULT NULL COMMENT '登录邮箱(用户名)',
+  `nick` varchar(40) COLLATE utf8_bin DEFAULT NULL,
+  `onlineTime` datetime DEFAULT NULL COMMENT '在线时间',
+  `lastTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`guId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of tb_online
+-- ----------------------------
+INSERT INTO `tb_online` VALUES ('1', '562549047@qq.com', 'xiaogu', '2013-08-26 14:52:05', '2013-08-26 17:23:20');
+
+-- ----------------------------
+-- Table structure for `tb_record`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_record`;
+CREATE TABLE `tb_record` (
+  `guId` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL COMMENT '用户ID',
+  `type` int(2) DEFAULT NULL COMMENT '状态  1表示提取，0表示充值',
+  `money` double(9,2) DEFAULT NULL COMMENT '金额',
+  `state` int(2) DEFAULT NULL COMMENT '状态 0 表示失败 1表示成功',
+  `insertTime` datetime DEFAULT NULL,
+  `updateTime` datetime DEFAULT NULL,
+  PRIMARY KEY (`guId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of tb_record
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `tb_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_user`;
 CREATE TABLE `tb_user` (
-  `guId` int(11) NOT NULL COMMENT '用户ID',
+  `guId` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
   `nick` varchar(40) COLLATE utf8_bin DEFAULT NULL COMMENT '用户昵称',
-  `pwd` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '用户密码',
+  `pwd` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '用户密码',
   `secretQuestion` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '用户密保问题',
   `secretAnswer` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '用户密保答案',
   `mobile` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '用户手机',
@@ -74,6 +111,7 @@ CREATE TABLE `tb_user` (
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
+INSERT INTO `tb_user` VALUES ('1', 'xiaogu', 'e10adc3949ba59abbe56e057f20f883e', null, null, null, null, null, '562549047@qq.com', null, null, null, '500.00', '500.00', '500.00', '0.00', '500.00', '51.00');
 
 -- ----------------------------
 -- Table structure for `tb_wholebase`

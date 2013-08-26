@@ -68,12 +68,12 @@
 				    {
 				      guId: "12", 
 				      name: "射灯", 
-				      pinNumber :1,
+				      pinNumber :0,
 				    }, 
 				    {
 				      guId: "13", 
 				      name: "大炮", 
-				      pinNumber :1,
+				      pinNumber :0,
 				    }
 				  ]
 				};
@@ -85,6 +85,7 @@
 			type : "post",
 			success :function(data){
 				console.log(data);
+				alert(data.result_message);
 			}
 		})
 	});
