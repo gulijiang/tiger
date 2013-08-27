@@ -14,6 +14,6 @@
 			return $session_user;
 		}
 	}
-
+	
 	
 ?>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+<table>
+	<tr>
+		<th>总的金额</th>
+		<th>可取</th>
+		<th>可用</th>
+		<th>冻结</th>
+		<th>剩余</th>
+		<th>可用银元</th>
+	</tr>
+	<tr id="J_data">
+		
+	</tr>
+</table>
+
+<select id="J_type">
+	<option value="0">钱兑换银币</option>
+	<option value="1">银币兑换钱</option>
+</select>
+钱或者银币数量:<input type="text" id="J_count"/>
+<input type="button" value="兑换" id="J_trans"/>
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//获取用户信息
+		$.ajax({
+			data :{},
+			url : "control/front/user.php?method=getUserInfo",
+			dataType : "json",
+			type : "post",
+			success :function(data){
+				if(data  && data.result_code == "1" && data.result_message && data.result_message == "not login"){
+					alert(data.result_message);
+					window.location.href = "index3.html";
+				}
+				else{
+				    var strHtml = '<td>'+data.result_message[0]['totalMoney']+'</td>'
+				    			+ '<td>'+data.result_message[0]['desirableMoney']+'</td>'
+								+ '<td>'+data.result_message[0]['useableMoney']+'</td>'
+								+ '<td>'+data.result_message[0]['frostMoney']+'</td>'
+								+ '<td>'+data.result_message[0]['remainMoney']+'</td>'
+								+ '<td>'+data.result_message[0]['availableSilver']+'</td>'
+					$("#J_data").html(strHtml);
+					console.log(data);
+				}
+			}
+		});
+
+		$("#J_trans").click(function(){
+			var sendData = {
+					type : $("#J_type").val(),
+					count :$("#J_count").val()
+				};
+			$.ajax({
+				data :{},
+				url : "control/front/transform.php?method=transform",
+				dataType : "json",
+				type : "post",
+				success :function(data){
+					if(data  && data.result_code == "1" && data.result_message && data.result_message == "not login"){
+						alert(data.result_message);
+						window.location.href = "index3.html";
+					}
+					else{
+					    var strHtml = '<td>'+data.result_message[0]['totalMoney']+'</td>'
+					    			+ '<td>'+data.result_message[0]['desirableMoney']+'</td>'
+									+ '<td>'+data.result_message[0]['useableMoney']+'</td>'
+									+ '<td>'+data.result_message[0]['frostMoney']+'</td>'
+									+ '<td>'+data.result_message[0]['remainMoney']+'</td>'
+									+ '<td>'+data.result_message[0]['availableSilver']+'</td>'
+						$("#J_data").html(strHtml);
+						console.log(data);
+					}
+				}
+			});
+		});
+		
+	});
+</script>
+</body>
+</html>

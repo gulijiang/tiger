@@ -4,10 +4,58 @@
 	<meta charset="utf-8">
 </head>
 <body>
-<input type="button" value="测试" id="J_btn_test"/>
+<input type="button" value="压住" id="J_btn_press" />
+<input type="button" value="退出" id="J_btn_logout"/>
+<input type="button" value="获取在线用户" id="J_get_onlineUser" />
+<input type="button" value="到充值页面" id="J_btn_toRecharge"/>
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		$("#J_btn_press").click(function(){
+			press();
+		});
+		
+		$("#J_btn_logout").click(function(){
+			logout();
+		});
+
+		$("#J_get_onlineUser").click(function(){
+			getOnlineUser();
+		});
+		$("#J_btn_toRecharge").click(function(){
+			window.location.href = "recharge.html";
+		})
+	});
+
+	function getOnlineUser(){
+		$.ajax({
+			data :{},
+			url : "control/front/user.php?method=getOnlineUser",
+			dataType : "json",
+			type : "post",
+			success :function(data){
+				console.log(data);
+			}
+		})
+	}
+
+	function logout(){
+		$.ajax({
+			data :{},
+			url : "control/front/login.php?method=logout",
+			dataType : "json",
+			type : "post",
+			success :function(data){
+				alert(data && data.result_message ? data.result_message : "退出失败!");
+				if(data  && data.result_code == "0"){
+					window.location.href = "index3.html";
+				}
+			}
+		})
+	}
+	
+
+	function press(){
 		var sendData = {
 				  param: [
 				    {
@@ -84,11 +132,16 @@
 			dataType : "json",
 			type : "post",
 			success :function(data){
-				console.log(data);
-				alert(data.result_message);
+				if(data  && data.result_code == "1" && data.result_message && data.result_message == "not login"){
+					alert(data.result_message);
+					window.location.href = "index3.html";
+				}
+				else{
+					console.log(data);
+				}
 			}
 		})
-	});
+	}
 </script>
 </body>
 </html>

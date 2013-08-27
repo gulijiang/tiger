@@ -5,10 +5,25 @@ include '../../lib/public/basedinformation.php';
 include '../../lib/public/wholebase.php';
 include '../../lib/public/user.php';
 include '../../lib/public/session.php';
+include '../../lib/public/online.php';
 if(!empty($_GET['method'])){
 	$method = $_GET['method'];
 	if($method=='getWinResult'){
+		//判断该用户的银两数是不是够
+		if(!isset($_SESSION)){
+			session_start();
+		}
+		$sessionUser = getSessionUser();
+		$guId = $sessionUser['guId'];
+		
 		$mysql = new MySQL();
+		$onlineUser = getOnlineUserByEmail($mysql, $sessionUser['email']);
+		if(count($onlineUser) <= 0){
+			addOnline($mysql, $sessionUser['email'], $sessionUser['nick']);
+		}else{
+			updateOnline($mysql, $sessionUser['email']);
+		}
+		
 		//接受参数  并且判断压的总数是不是超过 (可以压的数量 如果不行则不给压，如果可以则再进行后续操作,暂时不考虑)
 		$param = $_POST['param'];
 		//1.数据  = 自身概率（百分数） * 整体基数 * 1/压数  $dataArray 就是所需要的数据
@@ -45,12 +60,7 @@ if(!empty($_GET['method'])){
 		for ($k2 = 0; $k2 < $length; $k2++) {
 			$tatalCount += $param[$k2]['pinNumber'];
 		}
-		//判断该用户的银两数是不是够
-		if(!isset($_SESSION)){
-			session_start();
-		}
-		$sessionUser = getSessionUser();
-		$guId = $sessionUser['guId'];
+		
 		$resCount = checkAvailableSilver($mysql, $tatalCount, $guId);
 		if($resCount[0]['availableSilver'] <= 0){
 			$result = getFailureResultByMessage("可用银币不够,请兑换!");

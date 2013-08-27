@@ -13,7 +13,7 @@
 	}
 	
 	function deleteOnlineByDelTime($mysql,$delTime){
-		$deleteSql = "delete from tb_online where LastTime < $del_time ";
+		$deleteSql = "delete from tb_online where LastTime < '{$delTime}'";
 		$flag = $mysql -> delete($deleteSql);
 		return $flag;
 	}
@@ -32,5 +32,10 @@
 		return $array;
 	}
 	
+	function deleteOnlineUser($mysql,$email){
+		$deleteSql = "delete from tb_online where email = '{$email}'";
+		$flag = $mysql -> delete($deleteSql);
+		return $flag;
+	}
 
 ?>

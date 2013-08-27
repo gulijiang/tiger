@@ -71,4 +71,35 @@
 		return $flag;
 	}
 	
+	/**
+	 * 判断总的钱够不够兑换的
+	 * Enter description here ...
+	 * @param $mysql
+	 * @param $count 需要兑换银元的钱数
+	 * @param $guId 
+	 */
+	function checkTotalMoney($mysql,$count,$guId){
+		$query = "select count(*) as count from tb_user where guId = {$guId} and (totalMoney-{$count}) >= 0";
+		$res = $mysql ->Query($query);
+		$array = $mysql->getRows($res);
+		return $array;
+	}
+	
+	
+	
+	/**
+	 * 钱转银元
+	 * @param $mysql
+	 * @param $count 需要兑换银元的钱数
+	 * @param $guId
+	 */
+	function moneyTransToAvailableSilver($mysql,$count,$guId){
+		$availableSilver = $count * 10;
+		$updateSql = "update tb_user set totalMoney = totalMoney - {$count},desirableMoney = desirableMoney - {$count},useableMoney = useableMoney - {$count},remainMoney = remainMoney - {$count}"
+					.",availableSilver = availableSilver + $availableSilver where guId = {$guId}";
+		$flag = $mysql -> update($updateSql);
+		return $flag;
+	}
+	
+	
 ?>

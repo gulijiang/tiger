@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50512
 File Encoding         : 65001
 
-Date: 2013-08-26 17:31:31
+Date: 2013-08-27 18:18:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,12 +56,12 @@ CREATE TABLE `tb_online` (
   `onlineTime` datetime DEFAULT NULL COMMENT '在线时间',
   `lastTime` datetime DEFAULT NULL,
   PRIMARY KEY (`guId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of tb_online
 -- ----------------------------
-INSERT INTO `tb_online` VALUES ('1', '562549047@qq.com', 'xiaogu', '2013-08-26 14:52:05', '2013-08-26 17:23:20');
+INSERT INTO `tb_online` VALUES ('4', '562549047@qq.com', 'xiaogu', '2013-08-27 15:04:54', '2013-08-27 15:04:54');
 
 -- ----------------------------
 -- Table structure for `tb_record`
@@ -80,6 +80,24 @@ CREATE TABLE `tb_record` (
 
 -- ----------------------------
 -- Records of tb_record
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `tb_transrecord`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_transrecord`;
+CREATE TABLE `tb_transrecord` (
+  `guId` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) DEFAULT NULL COMMENT '用户Id',
+  `type` int(2) DEFAULT NULL COMMENT '类型，是钱转银元 0  还是银元转钱 1',
+  `insertTime` datetime DEFAULT NULL COMMENT '转换时间',
+  `money` double(9,2) DEFAULT NULL,
+  `silverdollar` int(11) DEFAULT NULL COMMENT '银元',
+  PRIMARY KEY (`guId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ----------------------------
+-- Records of tb_transrecord
 -- ----------------------------
 
 -- ----------------------------
@@ -104,14 +122,15 @@ CREATE TABLE `tb_user` (
   `useableMoney` double(9,2) DEFAULT NULL COMMENT '可用金额',
   `frostMoney` double(9,2) DEFAULT NULL COMMENT '冻结金额',
   `remainMoney` double(9,2) DEFAULT NULL COMMENT '资金余额',
-  `availableSilver` double(9,2) DEFAULT NULL COMMENT '可用银币',
+  `availableSilver` int(11) DEFAULT NULL COMMENT '可用银币',
   PRIMARY KEY (`guId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
-INSERT INTO `tb_user` VALUES ('1', 'xiaogu', 'e10adc3949ba59abbe56e057f20f883e', null, null, null, null, null, '562549047@qq.com', null, null, null, '500.00', '500.00', '500.00', '0.00', '500.00', '51.00');
+INSERT INTO `tb_user` VALUES ('1', 'xiaogu', 'e10adc3949ba59abbe56e057f20f883e', null, null, null, null, null, '562549047@qq.com', null, null, null, '500.00', '500.00', '500.00', '0.00', '500.00', '51');
+INSERT INTO `tb_user` VALUES ('2', 'xiaogu2', 'e10adc3949ba59abbe56e057f20f883e', null, null, null, null, null, '1@qq.com', null, null, null, '500.00', '500.00', '500.00', '0.00', '500.00', '20');
 
 -- ----------------------------
 -- Table structure for `tb_wholebase`

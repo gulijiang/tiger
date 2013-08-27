@@ -5,7 +5,7 @@
 	include '../../lib/public/online.php';
 	if(!empty($_GET['method'])){
 		$method = $_GET['method'];
-		if($method=='login'){
+		if($method=='login'){//登录
 			$mysql = new MySQL();
 			$email = $_POST['email'];
 			$pwd = $_POST['pwd'];
@@ -43,7 +43,20 @@
 				$result = getFailureResultByMessage("密码不正确!");
 				echo json_encode($result);
 			}
-		}else{
+		}
+		else if($method == 'logout'){
+			if(!isset($_SESSION)){
+				session_start();
+			}
+			if($_SESSION['user']['email'] != ""){
+			   $mysql = new MySQL();
+			   deleteOnlineUser($mysql, $_SESSION['user']['email']);
+			}	
+			$_SESSION['user']['guId']="";
+			$result = getSuccessResultByMessage("退出成功!");
+			echo json_encode($result);
+		}
+		else{
 			errorMethod();
 		}
 	}else{
