@@ -45,3 +45,8 @@
 异步获取在线列表接口
 1.删除一个在线用户的时间是现在时间减去更新时间  $del_time = ($now_time - $update_time);
 2.获取在线用户 根据online_time 倒序
+
+
+支付宝充钱过程
+表单提交 => alipay/alipayto.php  => return_url.php(处理)
+

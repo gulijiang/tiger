@@ -24,6 +24,7 @@
 				$result = getFailureResultByMessage("钱或者银币数量输入格式不正确!");
 				echo json_encode($result);exit();
 			}
+			$mysql = new MySQL();
 			//判断count
 			if($type==0){
 				if(checkPositiveInteger($count)){
@@ -37,7 +38,7 @@
 						//事务开始：
 						mysql_query("BEGIN");
 						$flag1 = moneyTransToAvailableSilver($mysql, $count, $guId);
-						$flag2 = addTransRecord($mysql, $userId, 0, $count, $count*10);
+						$flag2 = addTransRecord($mysql, $guId, 0, $count, $count*10);
 						if($flag1 && $flag2){
 							mysql_query("COMMIT");
 							$result = getSuccessResultByMessage("钱兑换成银元成功!");
@@ -54,20 +55,30 @@
 				}
 			}
 			if($type==1){//银元转钱
-				if($count==0 || !is_numeric($count/10)){
+				if($count==0 || (!checkPositiveInteger($count/10))){
 					$result = getFailureResultByMessage("输入的银元数不是10的倍数，银元转钱必须是10的倍数!");
 					echo json_encode($result);exit();
 				}else{
 					//判断这个银元数是不是大于等于目前有的银元数
+					$guId = $sessionUser['guId'];
 					$array = checkAvailableSilver($mysql, $count, $guId);
-					if($resCount[0]['count'] <= 0){
+					if($array[0]['availableSilver'] <= 0){
 						$result = getFailureResultByMessage("总的银元不够需要兑换的银元!");
 						echo json_encode($result);exit();
 					}else{
 						//事务开始：
 						mysql_query("BEGIN");
-						//$flag1 = moneyTransToAvailableSilver($mysql, $count, $guId)
-						
+						$flag1 = availableSilverToMoney($mysql, $count, $guId);
+						$flag2 = addTransRecord($mysql, $guId, 1, $count/10, $count);
+						if($flag1 && $flag2){
+							mysql_query("COMMIT");
+							$result = getSuccessResultByMessage("银元兑换成钱成功!");
+							echo json_encode($result);exit();
+						}else{
+							mysql_query("ROLLBACK");
+							$result = getFailureResultByMessage("系统忙碌，请稍后操作!");
+							echo json_encode($result);exit();
+						}
 					}
 				}
 			}

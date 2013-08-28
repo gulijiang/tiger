@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50512
 File Encoding         : 65001
 
-Date: 2013-08-27 18:18:44
+Date: 2013-08-28 15:38:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -61,7 +61,7 @@ CREATE TABLE `tb_online` (
 -- ----------------------------
 -- Records of tb_online
 -- ----------------------------
-INSERT INTO `tb_online` VALUES ('4', '562549047@qq.com', 'xiaogu', '2013-08-27 15:04:54', '2013-08-27 15:04:54');
+INSERT INTO `tb_online` VALUES ('4', '562549047@qq.com', 'xiaogu', '2013-08-27 15:04:54', '2013-08-28 10:41:35');
 
 -- ----------------------------
 -- Table structure for `tb_record`
@@ -75,6 +75,7 @@ CREATE TABLE `tb_record` (
   `state` int(2) DEFAULT NULL COMMENT '状态 0 表示失败 1表示成功',
   `insertTime` datetime DEFAULT NULL,
   `updateTime` datetime DEFAULT NULL,
+  `transNo` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '交易号',
   PRIMARY KEY (`guId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -94,7 +95,7 @@ CREATE TABLE `tb_transrecord` (
   `money` double(9,2) DEFAULT NULL,
   `silverdollar` int(11) DEFAULT NULL COMMENT '银元',
   PRIMARY KEY (`guId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of tb_transrecord

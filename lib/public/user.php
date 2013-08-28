@@ -101,5 +101,19 @@
 		return $flag;
 	}
 	
+	/**
+	 * 银元转钱
+	 * @param $mysql
+	 * @param $availableSilver 需要兑换钱的银元数
+	 * @param $guId
+	 */
+	function availableSilverToMoney($mysql,$availableSilver,$guId){
+		$count = $availableSilver/10;
+		$updateSql = "update tb_user set totalMoney = totalMoney + {$count},desirableMoney = desirableMoney + {$count},useableMoney = useableMoney + {$count},remainMoney = remainMoney + {$count}"
+					.",availableSilver = availableSilver - $availableSilver where guId = {$guId}";
+		$flag = $mysql -> update($updateSql);
+		return $flag;			
+	}
+	
 	
 ?>
